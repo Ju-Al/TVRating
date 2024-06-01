@@ -1,0 +1,33 @@
+
+.search-view{
+    background-image: url('../images/search.jpg');
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-layout{
+    background-color: #233348;
+    width: 40rem;
+    height: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 1rem;
+}
+
+.search {
+    width: 20rem;
+}
+
+.search-label {
+    margin-bottom: 10px;
+    color: white;
+}
+
+.search-button {
+    background-color: #090a0b3b;
+    margin-left: 10px;
+}
+
