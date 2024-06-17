@@ -322,30 +322,31 @@ namespace fixtures
       }
       return result;
     };
-#define SANITY_CHECK(event_vec, slice_vec)                   \
-  {                                                          \
-    auto flat_log = as_events(slice_vec);                    \
-    auto sorted_event_vec = event_vec;                       \
-    sort_by_id(sorted_event_vec);                            \
-    REQUIRE_EQUAL(sorted_event_vec.size(), flat_log.size()); \
-    for (size_t i = 0; i < sorted_event_vec.size(); ++i)     \
-    {                                                        \
-      if (sorted_event_vec[i] != flat_log[i])                \
-      {                                                      \
-        FAIL(#event_vec << " != " << #slice_vec << "
-  i:
-    " << i << '
-'        \
-                        << to_string(sorted_event_vec[i])                      \
-                        << " != " << to_string(flat_log[i]));                  \
-      }                                                                        \
-    }                                                                          \
-  } SANITY_CHECK(zeek_conn_log, zeek_conn_log_slices); SANITY_CHECK(zeek_dns_log, zeek_dns_log_slices); SANITY_CHECK(zeek_http_log, zeek_http_log_slices); SANITY_CHECK(bgpdump_txt, bgpdump_txt_slices);
-        // SANITY_CHECK(random, const_random_slices);
-        // Read the full Zeek conn.log.
-        // TODO: port remaining slices to new deserialization API and replace
-        //       this hard-coded starting offset
-        id offset = 100000;
+#define SANITY_CHECK(event_vec, slice_vec)                         \
+  {                                                                \
+    auto flat_log = as_events(slice_vec);                          \
+    auto sorted_event_vec = event_vec;                             \
+    sort_by_id(sorted_event_vec);                                  \
+    REQUIRE_EQUAL(sorted_event_vec.size(), flat_log.size());       \
+    for (size_t i = 0; i < sorted_event_vec.size(); ++i)           \
+    {                                                              \
+      if (sorted_event_vec[i] != flat_log[i])                      \
+      {                                                            \
+        FAIL(#event_vec << " != " << #slice_vec << "i:" << i << '' \
+                        << to_string(sorted_event_vec[i])          \
+                        << " != " << to_string(flat_log[i]));      \
+      }                                                            \
+    }                                                              \
+  }
+    SANITY_CHECK(zeek_conn_log, zeek_conn_log_slices);
+    SANITY_CHECK(zeek_dns_log, zeek_dns_log_slices);
+    SANITY_CHECK(zeek_http_log, zeek_http_log_slices);
+    SANITY_CHECK(bgpdump_txt, bgpdump_txt_slices);
+    // SANITY_CHECK(random, const_random_slices);
+    // Read the full Zeek conn.log.
+    // TODO: port remaining slices to new deserialization API and replace
+    //       this hard-coded starting offset
+    id offset = 100000;
     caf::binary_deserializer src{nullptr, artifacts::logs::zeek::conn_buf,
                                  artifacts::logs::zeek::conn_buf_size};
     if (auto err = src(zeek_full_conn_log_slices))
