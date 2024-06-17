@@ -22,7 +22,7 @@ class LSUploadHelper
      * 
      * @throws Exception if the file is too large or no file is found.
      */
-    public static function checkUploadedFileSize($sFileName, $customMaxSize = null)
+    public function checkUploadedFileSize($sFileName, $customMaxSize = null)
     {
         if (is_null($customMaxSize)) {
             $iMaximumSize = getMaximumFileUploadSize();
