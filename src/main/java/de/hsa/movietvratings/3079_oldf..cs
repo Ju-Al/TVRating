@@ -136,7 +136,7 @@ namespace NLog.Internal.FileAppenders
         protected Mutex CreateSharableMutex(string mutexNamePrefix)
         {
             if (!PlatformDetector.SupportsSharableMutex)
-                return new Mutex();
+                throw new Exception("Creating Mutex not supported");
 
             var name = GetMutexName(mutexNamePrefix);
 
