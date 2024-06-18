@@ -11,3 +11,16 @@ class Rectangle:
 
     def area(self):
         return self.width * self.height
+    
+class Square(Rectangle):
+    def __init__(self, size):
+        self.width = size
+        self.height = size
+
+    def set_width(self, width):
+        self.width = width
+        self.height = width
+
+    def set_height(self, height):
+        self.width = height
+        self.height = height
