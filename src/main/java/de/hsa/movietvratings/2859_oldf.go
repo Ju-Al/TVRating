@@ -177,15 +177,15 @@ func (app *App) Start() error {
 		}
 
 		for _, lnAddr := range srv.Listen {
-			network, addrs, err := caddy.ParseNetworkAddress(lnAddr)
+			listenAddr, err := caddy.ParseNetworkAddress(lnAddr)
 			if err != nil {
 				return fmt.Errorf("%s: parsing listen address '%s': %v", srvName, lnAddr, err)
 			}
-
-			for _, addr := range addrs {
-				ln, err := caddy.Listen(network, addr)
+			for i := listenAddr.FromPort; i <= listenAddr.ToPort; i++ {
+				hostport := net.JoinHostPort(listenAddr.Host, fmt.Sprintf("%d", i))
+				ln, err := caddy.Listen(listenAddr.Network, hostport)
 				if err != nil {
-					return fmt.Errorf("%s: parsing listen address '%s': %v", srvName, lnAddr, err)
+					return fmt.Errorf("%s: listening on %s: %v", listenAddr.Network, hostport, err)
 				}
 
 				// enable HTTP/2 by default
