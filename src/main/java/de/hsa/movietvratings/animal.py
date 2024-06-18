@@ -4,3 +4,11 @@ class Animal:
     
     def get_name(self):
         pass
+
+
+class AnimalDB:
+    def get_animal(self) -> Animal:
+        pass
+
+    def save(self, animal: Animal):
+        pass
